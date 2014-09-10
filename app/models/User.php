@@ -23,4 +23,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+	public static function byUsername($username)
+	{
+
+		$user = User::whereUsername($username)->first();
+
+		if (! $user)
+			throw new Illuminate\Database\Eloquent\ModelNotFoundException;
+
+		return $user;
+	}
+
+	public function posts()
+	{
+		return $this->hasMany('Post');
+	}
+
 }

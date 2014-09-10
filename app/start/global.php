@@ -51,6 +51,24 @@ App::error(function(Exception $exception, $code)
 	Log::error($exception);
 });
 
+
+/*
+-------------------------------------------------------------------------------
+Catch ModelNotFoundException - return to route named "home"
+-------------------------------------------------------------------------------
+*/
+App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $exception) 
+{
+	return Redirect::home();
+});
+
+App::error(function(Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception) 
+{
+	return Redirect::home();
+});
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Maintenance Mode Handler
