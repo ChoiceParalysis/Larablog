@@ -17,7 +17,7 @@ class PostsTableSeeder extends Seeder
 				'title' => $faker->sentence(5),
 				'body' => $faker->paragraph(rand(3, 5)),
 				'category_id' => rand(1, 3),
-				'user_id' => rand(1, 2)
+				'user_id' => rand(1, 3)
 			]);
 		}
 

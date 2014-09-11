@@ -2,9 +2,13 @@
 
 use Acme\Validators\LoginValidator;
 use Acme\Validators\LoginValidationException;
+use Auth;
+use Redirect;
 
 class LoginService 
 {
+
+	protected $credentials = [];
 
 	public function __construct(LoginValidator $validator)
 	{
@@ -15,10 +19,21 @@ class LoginService
 	{
 		if ($this->validator->isValid($attributes))
 		{
-			return true;
+			$this->setLoginCredentials($attributes);
+			if (Auth::attempt($this->credentials)) {
+				return true;
+			}
 		}
 
 		throw new LoginValidationException('Login validation failed.', $this->validator->getErrors());
+	}
+
+	protected function setLoginCredentials($attributes)
+	{
+		$this->credentials = [
+			'username' => $attributes['username'],
+			'password' => $attributes['password']
+		];
 	}
 
 }

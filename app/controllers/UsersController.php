@@ -63,7 +63,7 @@ class UsersController extends \BaseController {
 	{
 		$user = $this->userRepository->getByUsername($username);
 
-		return $user;
+		return View::make('users.profile', compact('user'));
 	}	
 
 
@@ -108,14 +108,14 @@ class UsersController extends \BaseController {
 			try {
 				$this->loginService->login(Input::all());
 
-				return Redirect::home();
+				return Redirect::to('/users/' . Auth::user()->username);
 			}
 			catch(LoginValidationException $e){
 				return Redirect::back()->withInput()->withErrors($e->getErrors());
 			}
+		} else {
+			return View::make('users.login');
 		}
-
-		return View::make('users.login');
 	}
 
 

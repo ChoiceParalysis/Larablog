@@ -7,7 +7,7 @@ Route::get('/posts/{id}', 'PostsController@show')->where('id', '\d+');
 
 Route::any('login', ['as' => 'users.login', 'uses' => 'UsersController@login']);
 
-Route::get('/users/{username}', 'UsersController@show');
+Route::get('/users/{username}', ['as' => 'users.profile', 'uses' => 'UsersController@show']);
 
 Route::get('/users/{username}/posts', 'UsersController@index');
 
