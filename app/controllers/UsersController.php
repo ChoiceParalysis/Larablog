@@ -1,14 +1,18 @@
 <?php
 
 use Acme\Repositories\UserRepository\DbUserRepository;
+use Acme\Validators\LoginValidationException;
+use Acme\Services\LoginService;
 
 class UsersController extends \BaseController {
 
 	protected $userRepository;
+	protected $loginService;
 
-	public function __construct(DbUserRepository $userRepository)
+	public function __construct(DbUserRepository $userRepository, LoginService $loginService)
 	{
 		$this->userRepository = $userRepository;
+		$this->loginService = $loginService;
 	}
 
 	/**
@@ -100,30 +104,19 @@ class UsersController extends \BaseController {
 
 	public function login()
 	{
+		if (isRequestType(Input::server('REQUEST_METHOD'), 'POST')){
+			try {
+				$this->loginService->login(Input::all());
 
-		if ($this->isPostRequest()){
-			$validator = $this->getLoginValidator();
-
-			if ($validator->passes()) {
-				echo "Validation passed";
-			} else {
-				echo "Validation failed.";
+				return Redirect::home();
+			}
+			catch(LoginValidationException $e){
+				return Redirect::back()->withInput()->withErrors($e->getErrors());
 			}
 		}
 
 		return View::make('users.login');
 	}
 
-	protected function isPostRequest()
-	{
-		return Input::server('REQUEST_METHOD') == 'POST';
-	}
 
-	protected function getLoginValidator()
-	{
-		return Validator::make(Input::all(), [
-			'username' => 'required',
-			'password' => 'required'	
-		]);
-	} 
 }
