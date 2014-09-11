@@ -98,5 +98,32 @@ class UsersController extends \BaseController {
 		//
 	}
 
+	public function login()
+	{
 
+		if ($this->isPostRequest()){
+			$validator = $this->getLoginValidator();
+
+			if ($validator->passes()) {
+				echo "Validation passed";
+			} else {
+				echo "Validation failed.";
+			}
+		}
+
+		return View::make('users.login');
+	}
+
+	protected function isPostRequest()
+	{
+		return Input::server('REQUEST_METHOD') == 'POST';
+	}
+
+	protected function getLoginValidator()
+	{
+		return Validator::make(Input::all(), [
+			'username' => 'required',
+			'password' => 'required'	
+		]);
+	} 
 }

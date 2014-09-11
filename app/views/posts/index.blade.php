@@ -8,4 +8,6 @@
 		@endforeach
 	</ul><!-- end list-group -->
 
+	{{ $posts->links(); }}
+
 @stop

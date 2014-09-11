@@ -19,4 +19,11 @@ class DbPostRepository implements PostRepositoryInterface
 		return $post;
 	}
 
+	public function paginate($quantity)
+	{
+		$posts = Post::with('user')->paginate($quantity);
+
+		return $posts;
+	}
+
 }

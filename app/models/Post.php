@@ -2,6 +2,8 @@
 
 class Post extends Eloquent
 {
+
+	protected $guarded = ['id'];
 	
 	public function user()
 	{

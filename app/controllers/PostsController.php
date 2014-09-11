@@ -18,7 +18,7 @@ class PostsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$posts = $this->postRepository->all();
+		$posts = $this->postRepository->paginate(5);
 
 		return View::make('posts.index', compact('posts'));
 	}

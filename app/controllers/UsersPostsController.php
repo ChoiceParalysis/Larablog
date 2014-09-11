@@ -1,6 +1,15 @@
 <?php
 
+use Acme\Services\PostCreatorService;
+
 class UsersPostsController extends \BaseController {
+
+	protected $postCreator;
+
+	public function __construct(PostCreatorService $postCreator)
+	{
+		$this->postCreator = $postCreator;
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -20,7 +29,7 @@ class UsersPostsController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('partials/_form');
 	}
 
 
@@ -31,7 +40,20 @@ class UsersPostsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+
+		try {
+			$this->postCreator->create(Input::all());
+		} 
+		catch(Acme\Validators\PostValidationException $e)
+		{
+			return Redirect::back()->withInput()->withErrors($e->getErrors());	
+		}
+
+		
+
+		
+
+		return Redirect::home();
 	}
 
 
@@ -45,7 +67,7 @@ class UsersPostsController extends \BaseController {
 	{
 		$post = Post::find($id, $username);
 
-		return $post;
+		return View::make('posts.show', compact('post'));
 	}
 
 
