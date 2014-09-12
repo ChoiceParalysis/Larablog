@@ -34,6 +34,14 @@ class UsersTableSeeder extends Seeder
 			'password' => '1234',
 			'remember_token' => false
 		]);
+
+		User::create([
+			'username' => 'Mike',
+			'email' => 'jake@doe.com',
+			'bio' => $faker->paragraph(4),
+			'password' => '1234',
+			'remember_token' => false
+		]);
 	}
 
 }

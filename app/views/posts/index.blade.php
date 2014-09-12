@@ -8,6 +8,8 @@
 		@endforeach
 	</ul><!-- end list-group -->
 
-	{{ $posts->links(); }}
+	@if(count($posts))
+		{{ $posts->links(); }}
+	@endif
 
 @stop

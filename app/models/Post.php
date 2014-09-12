@@ -4,11 +4,13 @@ class Post extends Eloquent
 {
 
 	protected $guarded = ['id'];
+
 	
 	public function user()
 	{
 		return $this->belongsTo('User');
 	}
+
 
 	public static function find($id, $username = NULL)
 	{
@@ -18,7 +20,13 @@ class Post extends Eloquent
 			throw new Illuminate\Database\Eloquent\ModelNotFoundException;
 
 		return $post;
-		
 	}
 	
+
+	public static function getByUsername($username)
+	{
+		$posts = User::byUsername($username)->posts;
+		
+		return $posts;
+	}	
 }

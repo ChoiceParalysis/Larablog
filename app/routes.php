@@ -9,7 +9,7 @@ Route::any('login', ['as' => 'users.login', 'uses' => 'UsersController@login']);
 
 Route::get('/users/{username}', ['as' => 'users.profile', 'uses' => 'UsersController@show']);
 
-Route::get('/users/{username}/posts', 'UsersController@index');
+Route::get('/users/{username}/posts', 'UsersPostsController@index');
 
 Route::get('/users/{username}/posts/{id}', 'UsersPostsController@show')->where('id', '\d+');
 

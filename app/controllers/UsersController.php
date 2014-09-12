@@ -11,8 +11,8 @@ class UsersController extends \BaseController {
 
 	public function __construct(DbUserRepository $userRepository, LoginService $loginService)
 	{
-		$this->userRepository = $userRepository;
 		$this->loginService = $loginService;
+		$this->userRepository = $userRepository;
 	}
 
 	/**
@@ -21,13 +21,9 @@ class UsersController extends \BaseController {
 	 * @param  string $username
 	 * @return Response
 	 */
-	public function index($username)
+	public function index()
 	{
-		$user = $this->userRepository->getByUsername($username);
-
-		$posts = $user->posts;
-
-		return $posts;
+		
 	}
 
 
@@ -105,14 +101,19 @@ class UsersController extends \BaseController {
 	public function login()
 	{
 		if (isRequestType(Input::server('REQUEST_METHOD'), 'POST')){
+
 			try {
+
 				$this->loginService->login(Input::all());
 
 				return Redirect::to('/users/' . Auth::user()->username);
 			}
+
 			catch(LoginValidationException $e){
+
 				return Redirect::back()->withInput()->withErrors($e->getErrors());
 			}
+
 		} else {
 			return View::make('users.login');
 		}

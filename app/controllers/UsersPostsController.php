@@ -1,14 +1,17 @@
 <?php
 
 use Acme\Services\PostCreatorService;
+use Acme\Repositories\PostRepository\DbPostRepository;
 
 class UsersPostsController extends \BaseController {
 
 	protected $postCreator;
+	protected $postRepository;
 
-	public function __construct(PostCreatorService $postCreator)
+	public function __construct(PostCreatorService $postCreator, DbPostRepository $postRepository)
 	{
 		$this->postCreator = $postCreator;
+		$this->postRepository = $postRepository;
 	}
 
 	/**
@@ -16,9 +19,11 @@ class UsersPostsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($username)
 	{
-		//
+		$posts = $this->postRepository->getByUsername($username);
+
+		return View::make('posts.index', compact('posts'));
 	}
 
 
