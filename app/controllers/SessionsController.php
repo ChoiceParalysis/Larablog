@@ -1,26 +1,26 @@
 <?php
 
-use Acme\Repositories\UserRepository\DbUserRepository;
+use Acme\Validators\LoginValidationException;
+use Acme\Validators\LoginAuthException;
+use Acme\Services\LoginService;
 
+class SessionsController extends \BaseController {
 
-class UsersController extends \BaseController {
+	protected $loginService;
 
-	protected $userRepository;
-
-	public function __construct(DbUserRepository $userRepository)
+	public function __construct(LoginService $loginService)
 	{
-		$this->userRepository = $userRepository;
+		$this->loginService = $loginService;
 	}
 
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @param  string $username
 	 * @return Response
 	 */
 	public function index()
 	{
-		
+		//
 	}
 
 
@@ -31,7 +31,7 @@ class UsersController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('users.login');
 	}
 
 
@@ -42,22 +42,33 @@ class UsersController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		try {
+
+			$this->loginService->login(Input::all());
+
+			return Redirect::to('/users/' . Auth::user()->username);
+		}
+		catch(Exception $e)
+		{
+			if ($e instanceof LoginValidationException || $e instanceof LoginAuthException)
+			{
+				return Redirect::back()->withInput()->withErrors($e->getErrors());
+			}
+		}
+	
 	}
 
 
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  string $username
+	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($username)
+	public function show($id)
 	{
-		$user = $this->userRepository->getByUsername($username);
-
-		return View::make('users.profile', compact('user'));
-	}	
+		//
+	}
 
 
 	/**
@@ -94,5 +105,6 @@ class UsersController extends \BaseController {
 	{
 		//
 	}
+
 
 }

@@ -2,7 +2,7 @@
 
 @section('content')
 
-	{{ Form::open() }}
+	{{ Form::open(['action' => 'users.auth']) }}
 
 	<div class="form-group">
 		{{ Form::label('username', "Username") }}
@@ -16,9 +16,13 @@
 		{{ $errors->first('password', '<div class="error">:message</div>') }}
 	</div><!-- end form-group -->
 
+	{{ $errors->first('auth', '<div class="error">:message</div>') }}
+
 	<div class="form-group">
 		{{ Form::submit('Login', ['class' => 'btn btn-primary']) }}
 	</div><!-- end form-group -->
+
+
 
 	{{ Form::close() }}
 

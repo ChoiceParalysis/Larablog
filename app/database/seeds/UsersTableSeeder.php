@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
 
 		User::create([
 			'username' => 'John',
-			'email' => 'jake@doe.com',
+			'email' => $faker->email,
 			'bio' => $faker->paragraph(4),
 			'password' => '1234',
 			'remember_token' => false
@@ -37,7 +37,7 @@ class UsersTableSeeder extends Seeder
 
 		User::create([
 			'username' => 'Mike',
-			'email' => 'jake@doe.com',
+			'email' => $faker->email,
 			'bio' => $faker->paragraph(4),
 			'password' => '1234',
 			'remember_token' => false

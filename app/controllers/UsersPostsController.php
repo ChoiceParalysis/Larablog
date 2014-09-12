@@ -54,10 +54,6 @@ class UsersPostsController extends \BaseController {
 			return Redirect::back()->withInput()->withErrors($e->getErrors());	
 		}
 
-		
-
-		
-
 		return Redirect::home();
 	}
 
