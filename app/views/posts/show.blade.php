@@ -6,6 +6,6 @@
 
 <article class="post">{{ $post->body }}</article>
 
-{{ link_to('/', 'Go back') }}
+{{ link_to(URL::previous(), 'Go back') }}
 
 @stop
