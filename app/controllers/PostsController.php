@@ -29,9 +29,13 @@ class PostsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($username)
 	{
-		//
+		if (credentialsMatch($username)){
+			return View::make('partials/_form');
+		}
+
+		return Redirect::route('login');
 	}
 
 

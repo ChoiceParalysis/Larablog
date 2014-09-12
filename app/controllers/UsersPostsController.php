@@ -33,8 +33,8 @@ class UsersPostsController extends \BaseController {
 	 * @return Response
 	 */
 	public function create()
-	{
-		return View::make('partials/_form');
+	{	
+		
 	}
 
 
