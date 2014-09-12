@@ -25,8 +25,8 @@ class Post extends Eloquent
 
 	public static function getByUsername($username)
 	{
-		$posts = User::byUsername($username)->posts;
-		
+		$posts = User::byUsername($username)->posts()->paginate(5);
+
 		return $posts;
 	}	
 }
