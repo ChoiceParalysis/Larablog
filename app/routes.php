@@ -1,5 +1,12 @@
 <?php
 
+/*
+|-------------------------------------------------------------------------------
+| Binding DbPostRepository implementation to PostRepositoryInterface
+|-------------------------------------------------------------------------------
+*/
+App::bind('PostRepositoryInterface', 'DbPostRepository');
+
 Route::get('/', ['as' => 'home', 'uses' => 'PostsController@index']);
 
 Route::get('/posts/{id}', 'PostsController@show')->where('id', '\d+');

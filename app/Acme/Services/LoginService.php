@@ -10,11 +10,13 @@ class LoginService
 {
 
 	protected $credentials = [];
+	
 
 	public function __construct(LoginValidator $validator)
 	{
 		$this->validator = $validator;
 	}
+
 
 	public function login($attributes)
 	{
@@ -31,6 +33,7 @@ class LoginService
 
 		throw new LoginValidationException('Login validation failed.', $this->validator->getErrors());
 	}
+
 
 	protected function setLoginCredentials($attributes)
 	{

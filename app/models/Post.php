@@ -22,37 +22,4 @@ class Post extends Eloquent
 		return $this->belongsTo('User');
 	}
 
-
-	public static function find($id, $username = NULL)
-	{
-		$post = static::with('user')->findOrFail($id);
-
-		if ($username && $post->user->username !== $username) {
-			throw new Illuminate\Database\Eloquent\ModelNotFoundException;
-		}
-			
-		return $post;
-	}
-	
-
-	public static function getByUsername($username)
-	{
-		$posts = User::byUsername($username)->posts()->paginate(5);
-
-		return $posts;
-	}	
-
-
-	/**
-	 * undocumented function
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function assignToCategory($postId, $categoryId)
-	{
-		$post = Post::findOrFail($postId);
-
-		return $post;
-	}
 }

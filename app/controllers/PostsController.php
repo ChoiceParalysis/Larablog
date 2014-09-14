@@ -1,5 +1,6 @@
 <?php 
 
+use Acme\Repositories\PostRepository\PostRepositoryInterface;
 use Acme\Repositories\PostRepository\DbPostRepository;
 use Acme\Services\PostCreatorService;
 

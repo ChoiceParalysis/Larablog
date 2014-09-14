@@ -7,6 +7,8 @@ interface PostRepositoryInterface
 
 	public function find($id, $username = NULL);
 
+	public function getByUsername($username);
+
 	public function paginate($quantity);
 
 }

@@ -4,15 +4,18 @@
 	
 <h2 class="title">{{ $post->title }}</h2>
 
-<article class="post">{{ $post->body }}</article>
+<article class="post">{{ nl2br($post->body, false) }}</article>
 
-<h5>This post belongs to the following categories: </h5>
 
-<ul>
-@foreach($post->categories as $category)
-	<li>{{ $category->name }}</li>
-@endforeach
-</ul>
+<div class="categories">
+	<p class="categories-headline">This post belongs to the following categories: </p>
+
+	<ul>
+	@foreach($post->categories as $category)
+		<li>{{ $category->name }}</li>
+	@endforeach
+	</ul>
+</div><!-- end categories -->
 
 {{ link_to(URL::previous(), 'Go back') }}
 
