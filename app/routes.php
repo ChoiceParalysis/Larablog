@@ -19,5 +19,5 @@ Route::get('/users/{username}/posts/{id}', 'UsersPostsController@show')->where('
 
 Route::get('/users/{username}/posts/create', 'PostsController@create');
 
-Route::post('/posts/create', ['as' => 'posts.store', 'uses' => 'UsersPostsController@store']);
+Route::post('/posts/create', ['as' => 'posts.store', 'uses' => 'PostsController@store']);
 

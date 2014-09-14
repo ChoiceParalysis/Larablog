@@ -20,17 +20,32 @@ class PostCreatorService
 
 		if ($this->validator->isValid($attributes)) 
 		{
-			Post::create([
-				'title' => $attributes['title'],
-				'body' => $attributes['body'],
-				'category_id' => 1,
-				'user_id' => Auth::user()->id
-			]);
+			$categoryIds = [1, 2]; // test
+
+			$post = $this->store($attributes);
+
+			$this->syncCategories($post, $categoryIds);
 		
 			return true;
 		}
 
 		throw new PostValidationException('Post validation failed.', $this->validator->getErrors());
+	}
+
+
+	public function store($attributes)
+	{
+		return Post::create([
+			'title' => $attributes['title'],
+			'body' => $attributes['body'],
+			'user_id' => Auth::user()->id
+		]);
+	}
+
+
+	public function syncCategories($post, $categoryIds)
+	{
+		$post->categories()->sync($categoryIds);
 	}
 
 }

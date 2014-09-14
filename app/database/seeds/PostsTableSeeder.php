@@ -16,7 +16,6 @@ class PostsTableSeeder extends Seeder
 			Post::create([
 				'title' => $faker->sentence(5),
 				'body' => $faker->paragraph(rand(3, 5)),
-				'category_id' => rand(1, 3),
 				'user_id' => rand(1, 3)
 			]);
 		}

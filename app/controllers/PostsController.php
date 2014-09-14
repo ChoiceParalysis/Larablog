@@ -1,14 +1,17 @@
 <?php 
 
 use Acme\Repositories\PostRepository\DbPostRepository;
+use Acme\Services\PostCreatorService;
 
 class PostsController extends \BaseController {
 
 	protected $postRepository;
+	protected $postCreator;
 
-	public function __construct(DbPostRepository $postRepository)
+	public function __construct(DbPostRepository $postRepository, PostCreatorService $postCreator)
 	{
 		$this->postRepository = $postRepository;
+		$this->postCreator = $postCreator;
 	}
 
 	/**
@@ -46,7 +49,15 @@ class PostsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		try {
+			$this->postCreator->create(Input::all());
+		} 
+		catch(Acme\Validators\PostValidationException $e)
+		{
+			return Redirect::back()->withInput()->withErrors($e->getErrors());	
+		}
+
+		return Redirect::home();
 	}
 
 
