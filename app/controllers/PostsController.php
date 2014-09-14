@@ -70,10 +70,9 @@ class PostsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($username, $id)
 	{
-		$post = $this->postRepository->find($id);
-
+		$post = $this->postRepository->find($id, $username);
 		
 		return View::make('posts.show', compact('post'));
 	}

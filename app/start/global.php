@@ -62,6 +62,11 @@ App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $excepti
 	return Redirect::home();
 });
 
+/*
+-------------------------------------------------------------------------------
+Catch NotFoundHttpException - return to route named "home"
+-------------------------------------------------------------------------------
+*/
 App::error(function(Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception) 
 {
 	return Redirect::home();

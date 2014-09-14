@@ -25,11 +25,12 @@ class Post extends Eloquent
 
 	public static function find($id, $username = NULL)
 	{
-		$post = Post::whereId($id)->firstOrFail();
-  
-		if ($username && $post->user->username !== $username)
-			throw new Illuminate\Database\Eloquent\ModelNotFoundException;
+		$post = static::with('user')->findOrFail($id);
 
+		if ($username && $post->user->username !== $username) {
+			throw new Illuminate\Database\Eloquent\ModelNotFoundException;
+		}
+			
 		return $post;
 	}
 	

@@ -2,7 +2,7 @@
 
 @section('content')
 
-	{{ Form::open(['action' => 'posts.store']) }}
+	{{ Form::open() }}
 
 	<div class="form-group">
 	{{ Form::label('title', 'Title:') }}

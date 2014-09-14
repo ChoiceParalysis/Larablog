@@ -64,11 +64,9 @@ class UsersPostsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($username, $id)
+	public function show()
 	{
-		$post = Post::find($id, $username);
-
-		return View::make('posts.show', compact('post'));
+		
 	}
 
 

@@ -15,7 +15,7 @@ class DbPostRepository implements PostRepositoryInterface
 
 	public function find($id, $username = NULL)
 	{
-		$post = Post::findOrFail($id);
+		$post = Post::find($id, $username);
 
 		return $post;
 	}
