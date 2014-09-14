@@ -16,15 +16,14 @@ class PostCreatorService
 	}
 
 	public function create(array $attributes)
-	{
-
+	{	
 		if ($this->validator->isValid($attributes)) 
 		{
-			$categoryIds = [1, 2]; // test
+			$categories = $attributes['category_id'];
 
 			$post = $this->store($attributes);
 
-			$this->syncCategories($post, $categoryIds);
+			$this->syncCategories($post, $categories);
 		
 			return true;
 		}
@@ -33,7 +32,7 @@ class PostCreatorService
 	}
 
 
-	public function store($attributes)
+	public function store(array $attributes)
 	{
 		return Post::create([
 			'title' => $attributes['title'],

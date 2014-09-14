@@ -17,6 +17,17 @@
 	</div>
 
 	<div class="form-group">
+	{{ Form::label('category_id', 'Categories:') }}
+
+	@foreach($categories as $title => $value)
+		{{ Form::label('category_id[]', $title) }}
+		{{ Form::checkbox('category_id[]', $value) }}
+	@endforeach
+
+	{{ $errors->first('category_id', '<div class="error">:message</div>') }}
+	</div>
+
+	<div class="form-group">
 	{{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
 	</div>
 

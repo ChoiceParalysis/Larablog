@@ -5,7 +5,7 @@ class PostValidator extends Validator
 
 	protected static $rules = [
 		'title' => 'required',
-		'body' => 'required'
+		'body' => 'required',
+		'category_id' => 'required'
 	];
-
 }

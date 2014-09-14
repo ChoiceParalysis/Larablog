@@ -1,6 +1,5 @@
 <?php
 
-
 Route::get('/', ['as' => 'home', 'uses' => 'PostsController@index']);
 
 Route::get('/posts/{id}', 'PostsController@show')->where('id', '\d+');

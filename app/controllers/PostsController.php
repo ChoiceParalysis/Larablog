@@ -35,7 +35,10 @@ class PostsController extends \BaseController {
 	public function create($username)
 	{
 		if (credentialsMatch($username)){
-			return View::make('partials/_form');
+
+			$categories = Category::lists('id', 'name');
+
+			return View::make('partials/_form', compact('categories'));
 		}
 
 		return Redirect::route('login');
