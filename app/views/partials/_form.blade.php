@@ -19,7 +19,7 @@
 	<div class="form-group">
 	{{ Form::label('category_id', 'Categories:') }}
 
-	@foreach($categories as $title => $value)
+	@foreach($categories as $value => $title)
 		{{ Form::label('category_id[]', $title) }}
 		{{ Form::checkbox('category_id[]', $value) }}
 	@endforeach

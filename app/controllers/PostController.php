@@ -1,9 +1,9 @@
 <?php 
 
 use Acme\Repositories\PostRepository\PostRepositoryInterface;
-use Acme\Repositories\PostRepository\DbPostRepository;
+use Acme\Repositories\CategoryRepository\CategoryRepositoryInterface;
 use Acme\Services\PostCreatorService;
-use Acme\Repositories\CategoryRepository\DbCategoryRepository;
+
 use Acme\Validators\PostValidationException;
 
 class PostController extends \BaseController {
@@ -16,7 +16,7 @@ class PostController extends \BaseController {
 
 
 	public function __construct(PostRepositoryInterface $postRepository, PostCreatorService $postCreator,
-							    DbCategoryRepository $categoryRepository)
+							    CategoryRepositoryInterface $categoryRepository)
 	{		
 		$this->postRepository = $postRepository;
 		$this->postCreator = $postCreator;

@@ -1,11 +1,5 @@
 <?php
 
-/*
-|-------------------------------------------------------------------------------
-| Binding DbPostRepository implementation to PostRepositoryInterface
-|-------------------------------------------------------------------------------
-*/
-App::bind('Acme\Repositories\PostRepository\PostRepositoryInterface', 'Acme\Repositories\PostRepository\DbPostRepository');
 
 
 Route::get('/', ['as' => 'home', 'uses' => 'PostController@index']);

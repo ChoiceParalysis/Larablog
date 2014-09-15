@@ -104,3 +104,11 @@ App::down(function()
 require app_path().'/filters.php';
 
 
+/*
+|-------------------------------------------------------------------------------
+| Interface bindings
+|-------------------------------------------------------------------------------
+*/
+App::bind('Acme\Repositories\PostRepository\PostRepositoryInterface', 'Acme\Repositories\PostRepository\DbPostRepository');
+
+App::bind('Acme\Repositories\CategoryRepository\CategoryRepositoryInterface', 'Acme\Repositories\CategoryRepository\DbCategoryRepository');
