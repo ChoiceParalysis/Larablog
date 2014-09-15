@@ -5,7 +5,6 @@
 todo:
 
 Bind repository;
-categories as links;
 edit post;
 -------------------------------------------------------------------------------
 */
@@ -23,7 +22,13 @@ Route::get('/', ['as' => 'home', 'uses' => 'PostController@index']);
 
 Route::get('/users/{username}/posts/{id}', 'PostController@show')->where('id', '\d+');
 
-Route::get('/users/{username}/posts/create', ['as' => 'post.create', 'uses' => 'PostController@create']);
+Route::get('/users/{username}/posts/{id}/edit', ['as'=> 'posts.edit', 'uses' => 'PostController@edit'])
+																				   ->where('id', '\d+');
+
+Route::patch('/users/{username}/posts/{id}/edit', ['as' => 'posts.update', 'uses' => 'PostController@update'])
+																					->where('id', '\d+');
+
+Route::get('/users/{username}/posts/create', ['as' => 'posts.create', 'uses' => 'PostController@create']);
 
 Route::post('/users/{username}/posts/create', ['as' => 'posts.store', 'uses' => 'PostController@store']);
 

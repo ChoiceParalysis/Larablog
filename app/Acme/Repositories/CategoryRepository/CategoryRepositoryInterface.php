@@ -3,6 +3,8 @@
 interface CategoryRepositoryInterface
 {
 
+	public function all();
+
 	public function byName($name);
 
 }

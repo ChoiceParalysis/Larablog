@@ -32,6 +32,28 @@ class PostCreatorService
 	}
 
 
+	public function update($post, array $attributes)
+	{
+		if ($this->validator->isValid($attributes))
+		{
+			$categories = $attributes['category_id'];
+
+			$post = $post->fill([
+				'title' => $attributes['title'],
+				'body'  => $attributes['body']
+			]);
+
+			$post->save();
+
+			$this->syncCategories($post, $categories);
+		
+			return true;
+		}
+
+		throw new PostValidationException('Post validation failed.', $this->validator->getErrors());
+	}
+
+
 	public function store(array $attributes)
 	{
 		return Post::create([

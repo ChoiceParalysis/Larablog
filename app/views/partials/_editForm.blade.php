@@ -1,8 +1,8 @@
-
+dd($categories);
 
 @section('content')
 
-	{{ Form::open() }}
+	{{ Form::model($post, ['method' => 'PATCH', 'route' => ['posts.update', Auth::user()->username, $post->id]]) }}
 
 	<div class="form-group">
 	{{ Form::label('title', 'Title:') }}

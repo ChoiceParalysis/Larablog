@@ -3,16 +3,26 @@
 use Acme\Repositories\PostRepository\PostRepositoryInterface;
 use Acme\Repositories\PostRepository\DbPostRepository;
 use Acme\Services\PostCreatorService;
+use Acme\Repositories\CategoryRepository\DbCategoryRepository;
+use Acme\Validators\PostValidationException;
 
 class PostController extends \BaseController {
 
 	protected $postRepository;
 	protected $postCreator;
+	protected $categoryRepository;
 
-	public function __construct(DbPostRepository $postRepository, PostCreatorService $postCreator)
-	{
+	protected $categories = [];
+
+
+	public function __construct(DbPostRepository $postRepository, PostCreatorService $postCreator,
+							    DbCategoryRepository $categoryRepository)
+	{		
 		$this->postRepository = $postRepository;
 		$this->postCreator = $postCreator;
+		$this->categoryRepository = $categoryRepository;
+
+		$this->categories = $this->categoryRepository->all();
 	}
 
 	/**
@@ -37,9 +47,7 @@ class PostController extends \BaseController {
 	{
 		if (credentialsMatch($username)){
 
-			$categories = Category::lists('id', 'name');
-
-			return View::make('partials/_form', compact('categories'));
+			return View::make('posts.create', ['categories' => $this->categoryRepository->all()]);
 		}
 
 		return Redirect::route('login');
@@ -53,10 +61,11 @@ class PostController extends \BaseController {
 	 */
 	public function store()
 	{
-		try {
+		try 
+		{
 			$this->postCreator->create(Input::all());
 		} 
-		catch(Acme\Validators\PostValidationException $e)
+		catch(PostValidationException $e)
 		{
 			return Redirect::back()->withInput()->withErrors($e->getErrors());	
 		}
@@ -85,9 +94,11 @@ class PostController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($username, $id)
 	{
-		//
+		$post = $this->postRepository->find($id);
+
+		return View::make('posts.edit', ['post' => $post, 'categories' => $this->categoryRepository->all()]);
 	}
 
 
@@ -97,9 +108,20 @@ class PostController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($username, $id)
 	{
-		//
+		$post = $this->postRepository->find($id, $username);
+
+		try
+		{
+			$this->postCreator->update($post, Input::all());
+		}
+		catch(PostValidationException $e)
+		{
+			return Redirect::back()->withInput()->withErrors($e->getErrors());	
+		}
+
+		return Redirect::home();
 	}
 
 
