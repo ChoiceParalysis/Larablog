@@ -15,7 +15,7 @@ class PostController extends \BaseController {
 	protected $categories = [];
 
 
-	public function __construct(DbPostRepository $postRepository, PostCreatorService $postCreator,
+	public function __construct(PostRepositoryInterface $postRepository, PostCreatorService $postCreator,
 							    DbCategoryRepository $categoryRepository)
 	{		
 		$this->postRepository = $postRepository;
@@ -96,11 +96,16 @@ class PostController extends \BaseController {
 	 */
 	public function edit($username, $id)
 	{
-		$post = $this->postRepository->find($id, $username);
+		if (credentialsMatch($username))
+		{
+			$post = $this->postRepository->find($id, $username);
 
-		$postCategories = $this->categoryRepository->getFromPost($post);
+			$postCategories = $this->categoryRepository->getFromPost($post);
 
-		return View::make('posts.edit', ['post' => $post, 'categories' => $this->categories, 'postCategories' => $postCategories]);
+			return View::make('posts.edit', ['post' => $post, 'categories' => $this->categories, 'postCategories' => $postCategories]);
+		}
+
+		return Redirect::home();
 	}
 
 
