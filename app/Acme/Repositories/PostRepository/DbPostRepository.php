@@ -8,7 +8,7 @@ class DbPostRepository implements PostRepositoryInterface
 
 	public function all()
 	{
-		$posts = Post::with('user')->get();
+		$posts = Post::orderBy('id', 'DESC')->with('user')->get();
 
 		return $posts;
 	}
@@ -36,7 +36,7 @@ class DbPostRepository implements PostRepositoryInterface
 
 	public function paginate($quantity)
 	{
-		$posts = Post::with('user')->paginate($quantity);
+		$posts = Post::orderBy('id', 'DESC')->with('user')->paginate($quantity);
 
 		return $posts;
 	}
