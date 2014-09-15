@@ -47,7 +47,7 @@ class PostController extends \BaseController {
 	{
 		if (credentialsMatch($username)){
 
-			return View::make('posts.create', ['categories' => $this->categoryRepository->all()]);
+			return View::make('posts.create', ['categories' => $this->categories]);
 		}
 
 		return Redirect::route('login');
@@ -96,9 +96,11 @@ class PostController extends \BaseController {
 	 */
 	public function edit($username, $id)
 	{
-		$post = $this->postRepository->find($id);
+		$post = $this->postRepository->find($id, $username);
 
-		return View::make('posts.edit', ['post' => $post, 'categories' => $this->categoryRepository->all()]);
+		$postCategories = $this->categoryRepository->getFromPost($post);
+
+		return View::make('posts.edit', ['post' => $post, 'categories' => $this->categories, 'postCategories' => $postCategories]);
 	}
 
 
@@ -110,15 +112,19 @@ class PostController extends \BaseController {
 	 */
 	public function update($username, $id)
 	{
-		$post = $this->postRepository->find($id, $username);
 
-		try
+		if (credentialsMatch($username))
 		{
-			$this->postCreator->update($post, Input::all());
-		}
-		catch(PostValidationException $e)
-		{
-			return Redirect::back()->withInput()->withErrors($e->getErrors());	
+			$post = $this->postRepository->find($id, $username);
+
+			try
+			{
+				$this->postCreator->update($post, Input::all());
+			}
+			catch(PostValidationException $e)
+			{
+				return Redirect::back()->withInput()->withErrors($e->getErrors());	
+			}
 		}
 
 		return Redirect::home();

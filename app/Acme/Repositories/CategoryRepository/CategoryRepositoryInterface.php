@@ -7,4 +7,5 @@ interface CategoryRepositoryInterface
 
 	public function byName($name);
 
+	public function getFromPost($post);
 }

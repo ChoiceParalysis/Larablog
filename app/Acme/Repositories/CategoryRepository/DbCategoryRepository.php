@@ -7,12 +7,22 @@ class DbCategoryRepository implements CategoryRepositoryInterface
 
 	public function all()
 	{
-		return Category::lists('id', 'name');
+		return Category::lists('name', 'id');
 	}
 
 	public function byName($name)
 	{
 		return Category::whereName($name)->firstOrFail()->posts();
+	}
+
+	public function getFromPost($post)
+	{
+		foreach($post->categories->toArray() as $category)
+		{
+			$postCategories[] = $category['name'];
+		}
+
+		return $postCategories;
 	}
 
 }

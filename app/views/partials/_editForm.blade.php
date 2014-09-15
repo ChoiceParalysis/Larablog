@@ -1,8 +1,12 @@
-dd($categories);
+<?php
+
+
+
+?>
 
 @section('content')
-
-	{{ Form::model($post, ['method' => 'PATCH', 'route' => ['posts.update', Auth::user()->username, $post->id]]) }}
+	
+	{{ Form::model($post, ['method' => 'PATCH', 'route' => ['posts.update', $post->user->username, $post->id]]) }}
 
 	<div class="form-group">
 	{{ Form::label('title', 'Title:') }}
@@ -16,12 +20,15 @@ dd($categories);
 	{{ $errors->first('body', '<div class="error">:message</div>') }}
 	</div>
 
+
+
 	<div class="form-group">
 	{{ Form::label('category_id', 'Categories:') }}
+	@foreach($categories as $value => $title)
 
-	@foreach($categories as $title => $value)
 		{{ Form::label('category_id[]', $title) }}
-		{{ Form::checkbox('category_id[]', $value) }}
+		{{ Form::checkbox('category_id[]', $value, in_array($title, $postCategories)) }}
+
 	@endforeach
 
 	{{ $errors->first('category_id', '<div class="error">:message</div>') }}
