@@ -3,9 +3,10 @@
 class Category extends Eloquent
 {
 
-	public function items()
+	public function posts()
 	{
-		return $this->hasMany('Post');
+		return $this->belongsToMany('Post', 'post_category');
 	}
+
 
 }
